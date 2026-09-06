@@ -1,52 +1,41 @@
-<a href="https://swb2019.github.io/shannon-brown-career/"><img src="assets/profile-banner.webp" alt="Shannon Brown — Security leadership, risk, and systems" width="100%" /></a>
+<a href="https://swb2019.github.io/shannon-brown-career/"><img src="assets/og.png" alt="Shannon Brown — Security operations & risk leadership" width="100%" /></a>
 
-<p align="center">
-  <a href="https://swb2019.github.io/shannon-brown-career/"><strong>Explore the portfolio ↗</strong></a> &nbsp; · &nbsp;
-  <a href="https://www.linkedin.com/in/shannon-w-brown">LinkedIn</a> &nbsp; · &nbsp;
-  <a href="https://swb2019.github.io/shannon-brown-career/resume.pdf">Résumé</a>
-</p>
+# Shannon Brown
 
-## Security leadership, brought into focus.
+Security operations & risk leadership. A professional portfolio with original 3D, public-source analysis, exact experience chronology, and inspectable independent work.
 
-Shannon Brown’s professional portfolio connects global security operations, commercial risk experience, and systems thinking. It brings the career narrative together with a working demonstration of operational decision craft: [Hourglass Command](https://swb2019.github.io/gsoc-decision-ops/).
+[Live portfolio](https://swb2019.github.io/shannon-brown-career/) · [Hourglass case study](https://swb2019.github.io/shannon-brown-career/work/hourglass-command/) · [Notes](https://swb2019.github.io/shannon-brown-career/notes/) · [About](https://swb2019.github.io/shannon-brown-career/about/)
 
-### The experience
+## Experience
 
-- **Original 3D artwork** — a crystal and titanium sculpture with progressive WebGL parallax and light response.
-- **Editorial design** — expressive typography, a dark mineral palette, responsive layouts, and scroll-triggered reveals.
-- **A clear professional story** — career progression, commercial achievements, Harvard education, and cybersecurity credentials.
-- **Direct access** — résumé, LinkedIn, GitHub, email, and telephone links.
+The site connects professional evidence to the work: leadership of a 24-member GSOC, Harvard education, historical commercial results, a synthetic executive decision brief, and the Hourglass Command case study. Experience, analysis, and synthetic project material are clearly labeled.
 
-### Built to remain usable
+## Design and behavior
 
-The site works as plain HTML, CSS, and JavaScript. Content and links remain available without JavaScript. Reduced-motion preferences are respected, and visitors can pause animation. The artwork stays visible when WebGL is unavailable; animation stops offscreen and in background tabs.
+“Signal to decision” is an original Three.js sculpture of three smoked-glass planes, machined metal, and a citron seam. It loads after the static content, aligns once, and rests. Readers can explore it using pointer or keyboard controls. Reduced motion, data saving, WebGL failure, and unavailable storage preserve a complete static reading experience.
 
-Images and the Manrope font are served locally. The font’s [SIL Open Font License](assets/Manrope-OFL.txt) is included.
+All eight pages are static HTML. No backend, API key, analytics, form submission, or voice model is part of the portfolio. Hourglass is a separate application reached by an ordinary link.
 
-### Run locally
+## Develop and verify
 
-```bash
-git clone https://github.com/swb2019/shannon-brown-career.git
-cd shannon-brown-career
-python3 -m http.server 8080
+Use Node.js 24 and the committed lockfile.
+
+```sh
+npm ci
+npm run build
+npm run check
+npm run dev
 ```
 
-Open `http://localhost:8080`. No package installation or build step is required.
+`scripts/content.mjs` contains the two published briefs. `scripts/build.mjs` produces shared static pages and metadata. Styles and interaction modules remain small, directly editable files. The build recognizes the Sites checkout’s `dist/` output and this GitHub repository’s root output while preserving the public project base path.
 
-| File         | Role                                              |
-| :----------- | :------------------------------------------------ |
-| `index.html` | Professional content, navigation, and metadata    |
-| `styles.css` | Layout, responsive design, and motion preferences |
-| `main.js`    | Progressive interactions and artwork effects      |
-| `assets/`    | Original imagery, locally served font, and icons  |
-| `resume.pdf` | Public résumé                                     |
+The **Portfolio quality** workflow runs route and content checks, Chromium/Firefox/WebKit and mobile journeys, axe accessibility checks, failure-state tests, a 3D interaction test, and five mobile Lighthouse runs. Its artifacts record the actual tested revision and environment. Automated coverage is supplemented by manual keyboard, visual, and human-reader review; emulation is not a real-device or screen-reader certification.
 
-GitHub Pages serves the main branch at the repository root. The public URL and existing section anchors are retained.
+## Source, scope, and maintenance
 
-### Content
+- [Asset provenance and licenses](ASSETS.md)
+- [Maintenance, release checks, and rollback](MAINTENANCE.md)
+- [Code license](LICENSE)
+- [Public privacy notice](https://swb2019.github.io/shannon-brown-career/privacy/)
 
-Experience, education, and achievement statements are grounded in Shannon’s résumé and public professional profile. Hourglass Command is presented as a training simulation.
-
----
-
-[Shannon Brown](https://github.com/swb2019) · [Live portfolio](https://swb2019.github.io/shannon-brown-career/) · [Hourglass Command](https://github.com/swb2019/gsoc-decision-ops)
+Developed through AI-assisted design and engineering. Professional facts are owner-supplied. No employer incident data, client systems, private strategy, or confidential evidence records belong in this repository.

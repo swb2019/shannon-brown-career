@@ -2,7 +2,7 @@ name: Portfolio quality
 on:
   pull_request:
   push:
-    branches: [main, feat/security-leadership-presence]
+    branches: [main]
 permissions:
   contents: read
 jobs:

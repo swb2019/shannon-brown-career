@@ -6,12 +6,12 @@ export function createInstrument(canvas, onFailure) {
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
   renderer.setClearColor(0x080e0d,1);
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.35;
+  renderer.toneMappingExposure=1.08;
   const scene = new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(34,1,.1,100);
-  camera.position.set(0,.12,10.4);
+  camera.position.set(0,.12,9.8);
   const sculpture=new THREE.Group();scene.add(sculpture);
-  const resting=new THREE.Euler(.23,-.57,-.14);
+  const resting=new THREE.Euler(.22,-.63,-.20);
   sculpture.rotation.copy(resting);
 
   // A small studio environment gives the real glass and metal readable reflections.
@@ -20,8 +20,8 @@ export function createInstrument(canvas, onFailure) {
     const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide}));
     mesh.material.color.multiplyScalar(intensity);mesh.position.set(x,y,z);mesh.rotation.set(rx,ry,0);studio.add(mesh);
   };
-  panel(0xf3f3e9,6,-4,3,3,3,8,.6);panel(0xc8ddd0,3,5,1,1,2,9,-.7);
-  panel(0xffffff,8,0,6,0,9,4,0,Math.PI/2);panel(0xdbfca9,2,-2,-3,2,1,5,.2);
+  panel(0xf3f3e9,2.5,-4,3,3,3,8,.6);panel(0xc8ddd0,2,5,1,1,2,9,-.7);
+  panel(0xffffff,3.5,0,6,0,9,4,0,Math.PI/2);panel(0xdbfca9,2,-2,-3,2,1,5,.2);
   panel(0xffffff,3,0,0,-5,3,7);
   const pmrem=new THREE.PMREMGenerator(renderer);
   const environment=pmrem.fromScene(studio,.035,.1,50);
@@ -32,7 +32,7 @@ export function createInstrument(canvas, onFailure) {
   const rim=new THREE.DirectionalLight(0xdbfca9,2);rim.position.set(4,0,-3);scene.add(rim);
   const metal=new THREE.MeshStandardMaterial({color:0xadb7aa,metalness:1,roughness:.23,envMapIntensity:1.2});
   const edgeMetal=new THREE.MeshStandardMaterial({color:0x45544b,metalness:1,roughness:.32});
-  const glass=new THREE.MeshPhysicalMaterial({color:0x8ca99a,metalness:0,roughness:.11,transmission:.92,thickness:.22,ior:1.48,attenuationColor:0x496557,attenuationDistance:2.8,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:1.1});
+  const glass=new THREE.MeshPhysicalMaterial({color:0x668b73,metalness:.06,roughness:.18,transparent:true,opacity:.32,depthWrite:false,transmission:0,clearcoat:1,clearcoatRoughness:.2,envMapIntensity:.7});
   const citron=new THREE.MeshStandardMaterial({color:0xdbfca9,emissive:0xb4de75,emissiveIntensity:.8,metalness:.4,roughness:.24});
   function rectangle(w,h,r,target=new THREE.Shape()) {
     const x=-w/2,y=-h/2;
@@ -44,7 +44,7 @@ export function createInstrument(canvas, onFailure) {
   const frameGeometry=new THREE.ExtrudeGeometry(frameShape,{depth:.16,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.025,bevelThickness:.025,curveSegments:12});frameGeometry.center();
   const plates=[];
   for(let i=0;i<3;i++){
-    const group=new THREE.Group();const s=i-1;group.position.set(s*.52,s*.16,s*.55);group.rotation.z=s*.025;
+    const group=new THREE.Group();const s=i-1;group.position.set(s*.82,s*.29,s*.64);group.rotation.z=s*.045;
     const pane=new THREE.Mesh(plateGeometry,glass);group.add(pane);
     const frame=new THREE.Mesh(frameGeometry,i===1?metal:edgeMetal);group.add(frame);
     // A second hairline on each edge catches light as the planes change perspective.
@@ -54,10 +54,8 @@ export function createInstrument(canvas, onFailure) {
     }
     sculpture.add(group);plates.push({group,base:group.position.clone()});
   }
-  const seam=new THREE.Mesh(new THREE.BoxGeometry(.029,3.18,.045),citron);seam.position.set(1.79,.16,.65);sculpture.add(seam);
+  const seam=new THREE.Mesh(new THREE.BoxGeometry(.029,3.18,.045),citron);seam.position.set(2.13,.29,.74);sculpture.add(seam);
   const spine=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,1.67,24),metal);spine.rotation.x=Math.PI/2;spine.position.set(-.7,-1.42,0);sculpture.add(spine);
-  // Ground is part of the scene, not a separate page decoration.
-  const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x080e0d,roughness:.55,metalness:.3}));ground.rotation.x=-Math.PI/2;ground.position.y=-2.48;scene.add(ground);
   let frame=0,stopped=false,visible=true,paused=false,interactive=false,complete=false,start=0,previous=0,quality=0,windowStart=0,frameTimes=[];
   let targetX=0,targetY=0,x=0,y=0;
   const clamp=v=>Math.max(-.07,Math.min(.07,v));
@@ -74,7 +72,7 @@ export function createInstrument(canvas, onFailure) {
     if(!complete){plates.forEach(({group,base},i)=>{group.position.copy(base);group.position.x+=(i-1)*.5*(1-ease);group.position.z+=(i-1)*.3*(1-ease);});if(progress===1)complete=true;}
     x+=(targetX-x)*.09;y+=(targetY-y)*.09;sculpture.rotation.set(resting.x+y,resting.y+x,resting.z);
     draw();
-    if(!complete||interactive||Math.abs(targetX-x)+Math.abs(targetY-y)>.0003)frame=requestAnimationFrame(tick);
+    if(!complete||Math.abs(targetX-x)+Math.abs(targetY-y)>.0003)frame=requestAnimationFrame(tick);
     else{previous=0;windowStart=0;frameTimes=[];}
   }
   function run(){if(!frame&&!stopped&&!paused&&visible&&!document.hidden){previous=0;frame=requestAnimationFrame(tick);}}
