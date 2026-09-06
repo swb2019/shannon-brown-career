@@ -41,6 +41,7 @@ test('small-screen identity and reflow',async({page})=>{
 
 test('3D enhancement, pause persistence, keyboard controls, and context loss',async({page},info)=>{
  test.skip(info.project.name!=='chromium','The software-rendered enhancement is qualified once; other engines exercise the complete fallback.');
+ await page.route('**/instrument-worker.js',async route=>{const response=await route.fetch();await route.fulfill({response,body:"const getContext=OffscreenCanvas.prototype.getContext;OffscreenCanvas.prototype.getContext=function(type,...args){const value=getContext.call(this,type,...args);if(type==='webgl2')self.testContext=value;return value;};\n"+await response.text()});});
  await page.goto('');await expect(page.locator('#instrument')).toHaveClass(/is-ready/,{timeout:20000});
  await page.waitForTimeout(1600);
  await page.locator('#instrument-canvas').screenshot({path:'qa-output/instrument-poster.png',style:'.hero-copy,.instrument-index{visibility:hidden}'});
@@ -48,7 +49,7 @@ test('3D enhancement, pause persistence, keyboard controls, and context loss',as
  await page.getByRole('button',{name:'Rotate left'}).press('Enter');await page.getByRole('button',{name:'Reset view'}).click();
  await page.getByRole('button',{name:'Pause motion'}).click();await page.reload();await expect(page.getByRole('button',{name:'Resume motion'})).toBeVisible();
  await page.getByRole('button',{name:'Resume motion'}).click();await expect(page.locator('#instrument')).toHaveClass(/is-ready/,{timeout:20000});
- await page.locator('#instrument-canvas').evaluate(canvas=>canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+ const worker=page.workers().find(w=>w.url().endsWith('instrument-worker.js'));expect(worker).toBeTruthy();await worker.evaluate(()=>self.testContext.getExtension('WEBGL_lose_context').loseContext());
  await expect(page.locator('#instrument')).not.toHaveClass(/is-ready/);await expect(page.locator('.instrument-poster')).toBeVisible();
 });
 

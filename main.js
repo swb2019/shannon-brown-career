@@ -24,7 +24,7 @@ async function loadInstrument(interact=false) {
   try {
     const module = await import('./instrument.js');
     if (reduced() || explicitPause) return;
-    instrument = module.createInstrument(document.querySelector('#instrument-canvas'), () => { failed=true; figure.classList.remove('is-ready'); if(controls)controls.hidden=true; if(explore)explore.hidden=true; });
+    instrument = await module.createInstrument(document.querySelector('#instrument-canvas'), () => { failed=true; figure.classList.remove('is-ready'); if(controls)controls.hidden=true; if(explore)explore.hidden=true; });
     if (failed) return;
     figure.classList.add('is-ready');
     if(interact)instrument.explore(true);

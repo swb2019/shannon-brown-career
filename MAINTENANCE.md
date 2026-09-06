@@ -8,7 +8,7 @@ Edit published notes in `scripts/content.mjs` and shared templates in `scripts/b
 
 ## Verification
 
-`npm ci`, `npm run build`, and `npm run check` reproduce the pages and validate routes, local links, image attributes, source schema, and size budgets. The `Portfolio quality` workflow adds Chromium, Firefox, WebKit, and 390-pixel mobile journeys, axe accessibility checks, a real WebGL enhancement check, static fallback checks, and five Lighthouse cold runs. Saved artifacts record the tested environment and revision. Software rendering and device emulation are not real-device certification. Screen-reader and qualitative reader review remain human checks.
+`npm ci`, `npm run build`, and `npm run check` reproduce the pages and validate routes, local links, image attributes, source schema, and size budgets. The `Portfolio quality` workflow adds Chromium, Firefox, WebKit, and 390-pixel mobile journeys, axe accessibility checks, an off-thread WebGL enhancement check, static fallback checks, and five Lighthouse cold runs for each of eight routes on both mobile and desktop (80 runs). Saved artifacts record the tested environment and revision. Software rendering and device emulation are not real-device certification. Screen-reader and qualitative reader review remain human checks.
 
 ## Release
 

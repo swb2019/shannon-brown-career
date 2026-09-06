@@ -28,7 +28,7 @@ for(const n of notes){const words=wordCount(n.body);console.log(`${n.slug}: ${wo
 console.log(`Case study body: ${wordCount(caseBody)} words`);
 const limits={'main.js':[75000,true],'styles.css':[50000,true],'assets/manrope-latin.woff2':[120000,false],'assets/instrument-poster-mobile.webp':[250000,false],'assets/instrument-poster.webp':[450000,false]};
 for(const [file,[max,gzip]] of Object.entries(limits)){const bytes=await readFile(join(root,file));const size=gzip?gzipSync(bytes).length:bytes.length;console.log(`${file}: ${size} bytes${gzip?' gzip':''}`);if(size>max)errors.push(`${file}: over budget`);}
-const enhanced=(await Promise.all(['instrument.js','assets/vendor/three.module.min.js','assets/vendor/three.core.min.js'].map(async f=>gzipSync(await readFile(join(root,f))).length))).reduce((a,b)=>a+b,0);
+const enhanced=(await Promise.all(['instrument.js','instrument-worker.js','instrument-scene.js','assets/vendor/three.module.min.js','assets/vendor/three.core.min.js'].map(async f=>gzipSync(await readFile(join(root,f))).length))).reduce((a,b)=>a+b,0);
 console.log(`Optional 3D: ${enhanced} bytes gzip`);if(enhanced>1500000)errors.push('Optional 3D exceeds budget');
 const initial=(await Promise.all(['index.html','main.js','styles.css'].map(async f=>gzipSync(await readFile(join(root,f))).length))).reduce((a,b)=>a+b,0)+(await stat(join(root,'assets/manrope-latin.woff2'))).size+(await stat(join(root,'assets/instrument-poster-mobile.webp'))).size;
 console.log(`Static mobile critical assets: ${initial} bytes`);if(initial>900000)errors.push('Initial static transfer exceeds budget');
