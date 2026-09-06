@@ -1,0 +1,52 @@
+[
+  {
+    "id": "outage-decision",
+    "slug": "security-system-outage",
+    "type": "Public-source analysis",
+    "author": "Shannon Brown",
+    "visibility": "public",
+    "published": "2026-09-06",
+    "reviewed": "2026-09-06",
+    "title": "When a security-system outage becomes a business-risk decision",
+    "summary": "The critical question is what the business can safely continue while its picture is incomplete.",
+    "judgment": "Treat a loss of security visibility as a business-risk decision when the remaining controls can no longer support the activity being protected.",
+    "assumptions": "A fictional organization has a partial monitoring outage; no immediate life-safety emergency is established.",
+    "alternatives": "Continue normally if independent controls preserve the required assurance; suspend activity if the consequence cannot be contained.",
+    "indicators": "Independent verification fails, the affected activity becomes more consequential, or a promised compensating control cannot be sustained.",
+    "references": [
+      {
+        "title": "NIST Cybersecurity Framework 2.0, Govern",
+        "url": "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf"
+      },
+      {
+        "title": "ASIS: Meet the 3 Key Roles Within ESRM",
+        "url": "https://www.asisonline.org/security-management-magazine/articles/2023/09/esrm/key-roles-esrm/"
+      }
+    ]
+  },
+  {
+    "id": "executive-brief",
+    "slug": "briefing-before-certainty",
+    "type": "Public-source analysis",
+    "author": "Shannon Brown",
+    "visibility": "public",
+    "published": "2026-09-06",
+    "reviewed": "2026-09-06",
+    "title": "What an executive brief must say before the picture is complete",
+    "summary": "Useful uncertainty tells a decision-maker what can be done now—and what evidence would change the call.",
+    "judgment": "An incomplete picture can support a sound decision when the brief separates what is observed, what is inferred, and what must be decided before better information arrives.",
+    "assumptions": "A decision has a real time constraint and a named owner; the example does not describe a live incident.",
+    "alternatives": "Delay the recommendation when the decision is reversible and the next evidence is both timely and consequential.",
+    "indicators": "A critical assumption fails, credible contrary reporting arrives, the decision window changes, or the proposed treatment becomes infeasible.",
+    "references": [
+      {
+        "title": "ODNI ICD 203: Analytic Standards (public directive)",
+        "url": "https://archive.dni.gov/files/documents/ICD/ICD-203.pdf"
+      },
+      {
+        "title": "NIST Cybersecurity Framework 2.0",
+        "url": "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf"
+      }
+    ]
+  }
+]
