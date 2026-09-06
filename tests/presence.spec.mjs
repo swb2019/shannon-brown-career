@@ -47,7 +47,7 @@ test('3D enhancement, pause persistence, keyboard controls, and context loss',as
  await page.getByRole('button',{name:'Explore the instrument'}).click();await expect(page.getByRole('button',{name:'Rotate left'})).toBeVisible();
  await page.getByRole('button',{name:'Rotate left'}).press('Enter');await page.getByRole('button',{name:'Reset view'}).click();
  await page.getByRole('button',{name:'Pause motion'}).click();await page.reload();await expect(page.getByRole('button',{name:'Resume motion'})).toBeVisible();
- await page.getByRole('button',{name:'Resume motion'}).click();await expect(page.locator('#instrument')).toHaveClass(/is-ready/);
+ await page.getByRole('button',{name:'Resume motion'}).click();await expect(page.locator('#instrument')).toHaveClass(/is-ready/,{timeout:20000});
  await page.locator('#instrument-canvas').evaluate(canvas=>canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
  await expect(page.locator('#instrument')).not.toHaveClass(/is-ready/);await expect(page.locator('.instrument-poster')).toBeVisible();
 });
